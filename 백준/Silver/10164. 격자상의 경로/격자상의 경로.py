@@ -3,10 +3,10 @@ from collections import deque
 
 def is_valid(r, c):
     return 0 <= r < N and 0 <= c < M
-def bfs():
+def bfs(f):
     global ans, ans2
     q = deque()
-    q.append((0, 0, False))
+    q.append((0, 0, f))
     while q :
         r, c, flag = q.popleft()
         if r == N-1 and c == M-1 and flag :
@@ -23,13 +23,17 @@ def bfs():
 
 dr = [1, 0]
 dc = [0, 1]
-N, M, K =map(int, input().split())
+N, M, K = map(int, input().split())
 ans = 0
 ans2 = 0
 arr = [[0] * M for _ in range(N)]
+if K == 0 :
+    bfs(True)
+else :
+    tr, tc = (K-1)//M, (K-1)%M
+    arr[tr][tc] = 1
 
-tr, tc = K//M, K%M
+    bfs(False)
 
-arr[tr][tc] = 1
-bfs()
+
 print(ans2)
